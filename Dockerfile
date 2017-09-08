@@ -1,6 +1,6 @@
 FROM ruby:alpine
 
-MAINTAINER Simon Weis <docker@w3is.de>
+MAINTAINER Manfred Touron <m@42.am>, based on Simon Weis <docker@w3is.de>
 
 WORKDIR /dashboard
 
@@ -10,20 +10,20 @@ ENV BUNDLE_PATH="$GEM_HOME" \
     BUNDLE_APP_CONFIG="$GEM_HOME"
 ENV PATH $BUNDLE_BIN:$PATH
 
-RUN addgroup dashing \
-    && adduser -S -G dashing dashing \
-    && chown -R dashing:dashing /dashboard
+RUN addgroup smashing \
+    && adduser -S -G smashing smashing \
+    && chown -R smashing:smashing /dashboard
 
 RUN apk update && apk add make gcc g++ nodejs
 
-USER dashing
+USER smashing
 
-RUN gem install dashing bundler
+RUN gem install smashing bundler
 
 ONBUILD COPY . /dashboard
 ONBUILD RUN bundle
 
 EXPOSE 8080
 
-ENTRYPOINT ["dashing"]
+ENTRYPOINT ["smashing"]
 CMD ["start", "-p", "8080"]
